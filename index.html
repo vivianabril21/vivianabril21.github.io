@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOHPALLItoWorld</title>
+    <link rel="icon" href="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Isotipo1.png?raw=true">
+    <style>
+        /* Estilos generales */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            background-image: url('https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Fondo1.png?raw=true');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        /* Banner */
+        .banner {
+            width: 100%;
+            padding: 20px 0;
+            background-color: black;
+            text-align: center;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Encabezado */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: white;
+        }
+
+        .header img {
+            width: 300px;
+            height: auto;
+        }
+
+        /* Menú de navegación */
+        .navbar {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #a4ba45;
+        }
+
+        .navbar a::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #a4ba45;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Contenedores */
+        .container {
+            padding: 40px;
+            margin: 60px auto;
+            max-width: 1200px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para cada sección */
+        #inicio, #sobre-nosotros, #nuestro-producto, #recetas {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 32px;
+            color: white;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* Botón para volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #64712c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: none; /* Inicialmente oculto */
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background-color: #a4ba45;
+        }
+
+ /* Estilos del pie de página */
+.footer {
+    background-color: black;
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+    font-size: 18px;
+}
+
+.footer-contenido {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    text-align: center;
+    padding: 0 20px;
+}
+
+.footer img {
+    width: 70px;
+    height: auto;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.footer span {
+    flex: 1; 
+}
+
+
+        /* Slider */
+        .slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+        }
+
+
+.slide {
+    min-width: 400px;
+    max-width: 350px; 
+    cursor: pointer;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.slide:hover {
+    transform: scale(1.05);
+}
+
+.slide img {
+    width: 100%;
+    height: 400px; 
+    object-fit: cover; 
+    border-radius: 10px;
+}
+
+
+        /* Contenedor para receta completa */
+        .detalle-receta {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .detalle-receta button {
+            background-color:#64712c;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #contenido-receta {
+    margin-top: 20px;
+    text-align: justify;
+    text-align-last: center; 
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto; 
+    padding: 20px;
+    overflow-x: hidden; 
+    word-wrap: break-word; 
+}
+
+        }
+#sobre-nosotros {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.sobre-nosotros-contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; 
+}
+
+.texto {
+    flex: 1; 
+    max-width: 500px; 
+}
+
+.texto p {
+    text-align: justify;
+    font-size: 1.1em;
+}
+
+.imagen img {
+    max-width: 300px; 
+    height: auto;
+    border-radius: 10px; 
+}
+
+
+/* Estilos de la marquesina de imágenes */
+.marquesina-imagenes {
+    width: 100%;
+    overflow: hidden; 
+    padding: 10px 0;
+    position: relative;
+}
+
+.marquesina-imagenes img {
+    width: 50px;
+    height: auto;
+    margin-right: 20px;
+    display: inline-block;
+    animation: moverImagenes 15s linear infinite;
+}
+
+/* Animación para mover las imágenes */
+@keyframes moverImagenes {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%); 
+    }
+}
+
+ .music-button {
+            position: fixed;
+            bottom: 20px;
+            left:20px;
+            background-color: #64712c;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        .music-button:hover {
+            background-color: #a4ba45;
+        }
+
+
+#inicio {
+    margin-top: 30px;
+    text-align: center;
+}
+
+#inicio .contenido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left; 
+     
+}
+
+#inicio .imagen {
+    margin-right: 20px;
+}
+
+#inicio .texto {
+    max-width: 600px;  
+text-align: justify;
+}
+
+
+.sobre-nosotros-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.imagen {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.imagen img {
+    width: 100%; 
+    max-width: 500px;
+    height: auto;
+}
+
+.texto {
+    flex: 2;
+}
+
+    </style>
+</head>
+<body>
+<button class="music-button" onclick="toggleMusic()">🎵</button>
+
+    <!-- Audio -->
+    <audio id="music" src="https://github.com/vivianabril21/NOPHALLItoWorld/raw/refs/heads/main/cancion.mp3" preload="auto"></audio>
+
+    <script>
+        // Función para alternar la música (reproducir/pausar)
+        function toggleMusic() {
+            const music = document.getElementById("music");
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+
+    </script>
+
+    <!-- Encabezado con icono de imagen y menú -->
+    <div class="header">
+        <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo.png?raw=true">
+        <nav class="navbar">
+            <a href="#inicio">Inicio</a>
+            <a href="#sobre-nosotros">Sobre Nosotros</a>
+            <a href="#nuestro-producto">Nuestro Producto</a>
+            <a href="#recetas">Recetas</a>
+        </nav>
+    </div>
+
+    <!-- Banner dentro de la sección Inicio -->
+    <div class="banner">
+        Un toque de México en cada receta.
+    </div>
+
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+    <div class="marquesina-imagenes">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+   </div>
+<section id="inicio" class="container">
+    <h2>Inicio</h2>
+    <div class="contenido">
+        <div class="imagen">
+            <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/mascota.png?raw=true" alt="Logomascota">
+        </div>
+        <div class="texto">
+            <p>Bienvenidos a nuestro recetario donde encontrarás recetas saludables y deliciosas que se pueden hacer empleando nuestro producto.</p>
+            <p>Aquí podrás encontrar todo lo que necesitas para disfrutar de un estilo de vida saludable con el sabor del nopal.</p>
+        </div>
+    </div>
+</section>
+
+
+<section id="sobre-nosotros" class="container">
+    <h2>Sobre Nosotros</h2>
+    <div class="sobre-nosotros-contenido">
+        <div class="texto">
+            <p>Somos un grupo de empresarios apasionados por la salud y el bienestar, que creen en el potencial del nopal como fuente de nutrición y energía, un equipo de estudiantes conscientes del potencial existente de los recursos de nuestro municipio que trabajan juntos para seleccionar los mejores nopales y producir harina de alta calidad. Somos una empresa socialmente responsable, que se compromete a proteger el medio ambiente, apoyar a las comunidades locales y promover prácticas éticas en toda nuestra cadena de suministro.</p>
+        </div>
+        <div class="imagen">
+            <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Imagotipo.png?raw=true">
+        </div>
+    </div>
+</section>
+
+ <section id="nuestro-producto" class="container">
+    <h2>Nuestro Producto</h2>
+    <div class="sobre-nosotros-contenido">
+        <div class="imagen">
+            <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Producto.png?raw=true" alt="Extracto de Nopal">
+        </div>
+        <div class="texto">
+            <p>En <strong>NOHPALLIto World</strong>, ofrecemos un innovador y saludable extracto de nopal, diseñado para aprovechar todas las propiedades de esta planta increíblemente nutritiva. Nuestro extracto es una opción natural, ecológica y versátil para quienes buscan incorporar superalimentos en su dieta diaria.</p>
+            <p>El extracto de nopal se obtiene cuidadosamente de nopales frescos, preservando sus propiedades nutricionales. Esta planta es conocida por ser rica en fibra, antioxidantes y minerales, lo que la convierte en un excelente aliado para mejorar la salud digestiva, controlar los niveles de azúcar en sangre y mantener una piel saludable.</p>
+            <p>Además de sus beneficios para la salud, nuestro extracto de nopal refleja el compromiso de nuestra marca con la sostenibilidad y el cuidado del medio ambiente. Es ideal para usar en bebidas, batidos o como complemento alimenticio en diversas recetas. En <strong>NOHPALLIto World</strong>, no solo buscamos ofrecer un producto saludable, sino también contribuir a la conciencia ambiental con prácticas responsables en toda nuestra producción.</p>
+        </div>
+    </div>
+</section>
+
+
+    <section id="recetas" class="container">
+        <h2>Recetas</h2>
+        <div class="slider">
+            <div class="slide" onclick="mostrarReceta('receta1')">
+                <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/panesito.jpeg?raw=true" alt="Panecillo de Nopal">
+                <h3>Panecillo de Nopal</h3>
+            </div>
+            <div class="slide" onclick="mostrarReceta('receta2')">
+                <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/pollo.jpeg?raw=true" alt="Pollo en Salsa Verde">
+                <h3>Pollo en Salsa Verde</h3>
+            </div>
+            <div class="slide" onclick="mostrarReceta('receta3')">
+                <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/bebida1.jpeg?raw=true" alt="Bebida verde de nopal">
+                <h3>Bebida verde de nopal</h3>
+            </div>
+        </div>
+    </section>
+
+    <div id="detalle-receta" class="detalle-receta">
+        <button onclick="cerrarReceta()">Cerrar</button>
+        <div id="contenido-receta"></div>
+    </div>
+
+<footer class="footer">
+    <div class="footer-contenido">
+        <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+        <span>NOHPALLIto World © 2024</span>
+        <img src="https://github.com/vivianabril21/NOPHALLItoWorld/blob/main/Logotipo%20mascota1.png?raw=true">
+    </div>
+</footer>
+
+
+    <script>
+        function mostrarReceta(recetaId) {
+            const recetas = {
+                receta1: `<h2>Panecillo de Nopal</h2><h3>Ingredientes:</h3>                       
+                       <p>1 taza de harina de trigo integral<br>
+                        1/2 taza de harina de nopal deshidratado y molido<br>
+                        1/2 taza de azúcar mascabado o endulzante al gusto<br>
+                        1 cucharadita de polvo para hornear<br>
+                        1/2 cucharadita de bicarbonato de sodio<br>
+                        1/4 cucharadita de sal<br>
+                        1/2 taza de leche vegetal o agua<br>
+                        1/4 taza de aceite vegetal<br>
+                        1 huevo o sustituto vegano<br>
+                        1 cucharadita de extracto de vainilla<br>
+                        Opcional: semillas de chía o ajonjolí para decorar<br>
+                    </p><br>
+                    <h3>Instrucciones:</h3>
+                        <p>Precalienta el horno a 180°C (350°F) y engrasa un molde para panecillos.
+                       En un tazón grande, mezcla la harina de trigo integral, la harina de nopal, el azúcar, el polvo para hornear, el bicarbonato de sodio y la sal.<br>
+                       En otro tazón, combina la leche, el aceite, el huevo y la vainilla.<br>
+                       Agrega la mezcla líquida a los ingredientes secos y mezcla hasta obtener una masa homogénea.<br>
+                       Vierte la mezcla en los moldes hasta 3/4 de su capacidad. Decora con semillas si lo deseas.<br>
+                       Hornea durante 20-25 minutos o hasta que un palillo insertado salga limpio.<br>
+                       Deja enfriar, desmolda y disfruta.</p>
+`,
+                receta2: `<h2>Pollo en Salsa Verde</h2>
+                    <h3>Ingredientes:</h3>
+                    <p> 500 g de pechuga de pollo<br>
+                        1 taza de nopal molido<br>
+                        3-4 jitomates medianos<br>
+                        1/2 cebolla<br>
+                        2 dientes de ajo<br>
+                       1-2 chiles serranos (al gusto)<br>
+                        1 cucharada de aceite de oliva<br>
+                        Sal y pimienta al gusto<br>
+                        Cilantro fresco para decorar<br>
+                        1 limón (para acompañar)<br>
+                  </p>
+                    <h3>Instrucciones:</h3>
+                    <p>Cocinar el pollo: Cocina la pechuga de pollo en agua con sal durante 20-25 minutos hasta que esté completamente cocida. Luego, corta en cubos o tiras.<br>
+                        Preparar la salsa: Asa los jitomates, la cebolla, los chiles y los ajos en un sartén sin aceite hasta que estén dorados. Luego, licúa con el nopal molido hasta obtener una salsa suave. Si la mezcla queda muy espesa, puedes agregar un poco de agua.<br>
+                        Cocinar el pollo en la salsa: En una sartén, calienta el aceite de oliva y agrega la salsa verde con nopal. Cocina a fuego medio durante 5 minutos. Agrega el pollo y cocina junto con la salsa durante unos 10 minutos más para que tome el sabor.<br>
+                        Servir: Sirve el pollo con la salsa verde decorado con cilantro fresco y acompaña con una rodaja de limón. Puedes acompañar este platillo con arroz o tortillas.
+                   </p>`,
+                receta3: `<h2>Bebida verde de nopal</h2>
+                    <h3>Ingredientes:</h3>
+                    <p>
+                        1 taza de nopal molido<br>
+                        1/2 manzana verde<br>
+                        1/2 pepino<br>
+                        Jugo de 1 limón<br>
+                        1 cucharadita de miel (opcional)<br>
+                        1 taza de agua o agua de coco<br>
+                        Hielo al gusto<br>
+                 
+                    <h3>Instrucciones:</h3>
+                    Preparar los ingredientes: Lava bien el nopal molido, la manzana y el pepino. Corta la manzana y el pepino en trozos pequeños.<br>
+                    Licuar: Coloca todos los ingredientes (nopal, manzana, pepino, jugo de limón, miel y agua o agua de coco) en la licuadora. Mezcla bien hasta que obtengas una bebida suave<br>
+                    Servir: Sirve en un vaso con hielo y disfruta de esta refrescante bebida llena de fibra y nutrientes.<br>                        
+                    </p>`,
+            };
+            document.getElementById('contenido-receta').innerHTML = recetas[recetaId];
+            document.getElementById('detalle-receta').style.display = 'block';
+        }
+
+        function cerrarReceta() {
+            document.getElementById('detalle-receta').style.display = 'none';
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (window.scrollY > 200) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
